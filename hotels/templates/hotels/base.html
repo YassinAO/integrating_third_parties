@@ -12,6 +12,13 @@
 </head>
 
 <body>
-    {% block content %}
-    {% endblock content %}
+
+    {% include 'hotels/components/header.html' %}
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
 </body>
