@@ -1,14 +1,22 @@
 from django.shortcuts import render
 from .models import Hotel, City
+from django.views.generic import ListView
+from .filters import HotelFilter
 
 # Create your views here.
 
 
-def index(request):
-    hotels = Hotel.get_all_hotels()
-    cities = City.get_all_cities()
-    data = {}
-    data['hotels'] = hotels
-    data['cities'] = cities
+class HotelListView(ListView):
+    paginate_by = 5
+    model = Hotel
+    template_name = 'hotels/index.html'
 
-    return render(request, 'hotels/index.html', data)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = HotelFilter(
+            self.request.GET, queryset=self.get_queryset())
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return HotelFilter(self.request.GET, queryset=queryset).qs

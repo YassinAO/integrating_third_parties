@@ -16,10 +16,6 @@ class City(models.Model):
     def __str__(self):
         return self.name
 
-    @staticmethod
-    def get_all_cities():
-        return City.objects.all()
-
 
 class Hotel(models.Model):
     name = models.CharField(max_length=200)
@@ -34,14 +30,3 @@ class Hotel(models.Model):
 
     def __str__(self):
         return self.name
-
-    @staticmethod
-    def get_all_hotels():
-        return Hotel.objects.all()
-
-    @staticmethod
-    def get_hotel_by_city_id(city_id):
-        if city_id:
-            return Hotel.objects.filter(city=city_id)
-        else:
-            return Hotel.get_all_hotels()

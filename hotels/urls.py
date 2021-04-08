@@ -1,6 +1,6 @@
 from django.urls import path
-from hotels import views
+from hotels.views import HotelListView
 
 urlpatterns = [
-    path('', views.index, name='hotels-index')
+    path('', HotelListView.as_view(), name='hotels-index')
 ]
