@@ -1,5 +1,7 @@
 {% extends 'hotels/base.html' %}
 
 {% block content %}
-    CONTENT HERE
+    {% for city in cities %}
+        {{ city.name }}
+    {% endfor %}
 {% endblock content %}
