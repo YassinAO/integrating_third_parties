@@ -27,6 +27,7 @@ pip install pipenv
 pipenv shell
 cd integrating_third_parties
 pip install -r requirements.txt
+npm install
 copy .env-boilerplate .env
 ```
 #### **Make sure to change the credentials in the .env file to fit your needs.**

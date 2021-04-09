@@ -5,6 +5,18 @@ from io import StringIO
 import pandas as pd
 import requests
 
+# This command retrieves CSV files from the authenticated HTTP
+# and the retrieved data ends up in the models to populate the database.
+# within the .env file you can specify the auth user/pass and csv urls.
+# New commands can be made within this directory by creating a new file, read more at:
+# https://docs.djangoproject.com/en/3.1/howto/custom-management-commands/
+
+# This command is ran by using:
+# python manage.py import_csv
+
+# Or by creating a Windows scheduled task, see tutorial:
+# https://www.youtube.com/watch?v=2UbJfx-cHb4
+
 
 class Command(BaseCommand):
 
@@ -13,6 +25,7 @@ class Command(BaseCommand):
     session.auth = (config('CSV_USERNAME'), config('CSV_PASSWORD'))
 
     def handle(self, *args, **options):
+        # set credentials in .env file
         csv_city = self.session.get(config('CSV_CITY'))
 
         csv_hotel = self.session.get(config('CSV_HOTEL'))
