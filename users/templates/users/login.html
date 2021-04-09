@@ -1,0 +1,59 @@
+{% extends 'users/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="min-h-screen bg-white flex">
+  <div class="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+    <div class="mx-auto w-full max-w-sm lg:w-96">
+      <div>
+        <img class="h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
+        <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+          Log in to account
+        </h2>
+        <p class="mt-2 text-sm text-gray-600 max-w">
+          Or
+        <a href="{% url 'register' %}" class="font-medium text-indigo-600 hover:text-indigo-500">
+          register here!
+        </a>
+        </p>
+      </div>
+
+      <div class="mt-8">
+        <div class="mt-6">
+          <form action="#" method="POST" class="space-y-6">
+            {% csrf_token %}
+            {% for field in form %}
+              <div>
+                  {{ field.label_tag }}
+                  {% if form.is_bound %}
+                      {% if field.errors %}
+                          {% render_field field autocomplete="off" class="form-fields is-invalid" %}
+                          {% for error in field.errors %}
+                              <div class="text-red-600">
+                              {{ error }}
+                              </div>
+                          {% endfor %}
+                      {% else %}
+                          {% render_field field autocomplete="off" class="form-fields" %}
+                      {% endif %}
+                  {% else %}
+                      {% render_field field autocomplete="off" class="form-fields" %}
+                  {% endif %}
+              </div>
+            {% endfor %}
+            <div>
+              <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Log in
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hidden lg:block relative w-0 flex-1">
+    <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="">
+  </div>
+</div>
+
+{% endblock content %}
