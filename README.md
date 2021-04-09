@@ -9,6 +9,9 @@ In this case, to keep the exercise small, an application has to be built that im
 course CSV data is flat, while in the case of data models in Django one wants to make use of relations.
 So during the import of the data those relations have to be restored. Then in the end a small frontend application has to be built that allows users to lookup hotel data.
 
+<div style="text-align:center">
+    <img src="readme-images/hotels.png" width="100%">
+</div>
 
 ## Requirements
 * Python V3.+
@@ -22,6 +25,7 @@ git clone https://github.com/YassinAO/integrating_third_parties
 cd integrating_third_parties
 pip install pipenv 
 pipenv shell
+cd integrating_third_parties
 pip install -r requirements.txt
 copy .env-boilerplate .env
 ```
@@ -32,6 +36,15 @@ Once you have the database up and running, use the following commands:
 python manage.py makemigrations
 python manage.py migrate
 ```
+
+To populate the database you need to set the credentials and urls in the .env file that lead to the authenticated http.<br/>
+After doing that you can make use of the following command
+```
+python manage.py import_csv
+```
+This command above can also be executed automatically by using Windows task scheduler, see tutorial below on how to do this:<br/>
+[Schedule Django commands with Windows task scheduler (2021)](https://www.youtube.com/watch?v=2UbJfx-cHb4)
+
 To run the server use the command:
 ```
 python manage.py runserver

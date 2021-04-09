@@ -13,11 +13,9 @@ class Command(BaseCommand):
     session.auth = (config('CSV_USERNAME'), config('CSV_PASSWORD'))
 
     def handle(self, *args, **options):
-        csv_city = self.session.get(
-            'http://rachel.maykinmedia.nl/djangocase/city.csv')
+        csv_city = self.session.get(config('CSV_CITY'))
 
-        csv_hotel = self.session.get(
-            'http://rachel.maykinmedia.nl/djangocase/hotel.csv')
+        csv_hotel = self.session.get(config('CSV_HOTEL'))
 
         data_city = pd.read_csv(
             StringIO(csv_city.text), delimiter=';', engine='python', names=['acronym', 'name'])
@@ -37,3 +35,4 @@ class Command(BaseCommand):
                 city_code=row['city_code'],
                 city_id=City.objects.get(acronym=row['city_acronym']).id
             )
+        return
