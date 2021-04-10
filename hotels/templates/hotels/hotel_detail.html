@@ -1,0 +1,9 @@
+{% extends 'hotels/base.html' %}
+{% load url_extras %}
+{% load widget_tweaks %}
+
+{% block content %}
+{{ hotel.name }} <br/>
+{{ hotel.city_code }} <br/>
+{{ hotel.city.name }}
+{% endblock content%}
