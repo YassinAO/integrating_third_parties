@@ -12,6 +12,8 @@ from .filters import HotelFilter
 # Iterating over the objects/queryset requires you to use object_list in the view, see https://docs.djangoproject.com/en/3.1/ref/class-based-views/generic-display/#listview
 # Paginating requires you to use page_obj in the view, see https://docs.djangoproject.com/en/3.1/topics/pagination/#paginating-a-listview
 
+# The Update and Delete hotels is based upon if the authenticated user has the is_staff permission and if the user is based in the same city as the hotels.
+
 
 def index(request):
     return render(request, 'hotels/index.html')
@@ -53,7 +55,7 @@ class HotelUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         hotel = self.get_object()
-        if self.request.user.is_staff:
+        if self.request.user.is_staff and self.request.user.location == hotel.city:
             return True
         return False
 
@@ -64,6 +66,6 @@ class HotelDeleteView(UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         hotel = self.get_object()
-        if self.request.user.is_staff:
+        if self.request.user.is_staff and self.request.user.location == hotel.city:
             return True
         return False

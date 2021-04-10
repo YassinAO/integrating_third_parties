@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from hotels import models as hotels_models
 
 # Create your models here.
 
@@ -32,6 +33,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
+    location = models.ForeignKey(
+        hotels_models.City, on_delete=models.DO_NOTHING, default=1)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
