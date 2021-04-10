@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Hotel, City
-from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .filters import HotelFilter
 
 # Create your views here.
@@ -16,7 +17,7 @@ def index(request):
     return render(request, 'hotels/index.html')
 
 
-class HotelListView(ListView):
+class HotelListView(LoginRequiredMixin, ListView):
     paginate_by = 8
     model = Hotel
 
@@ -29,3 +30,40 @@ class HotelListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return HotelFilter(self.request.GET, queryset=queryset).qs
+
+
+class HotelDetailView(LoginRequiredMixin, DetailView):
+    model = Hotel
+
+
+class HotelCreateView(LoginRequiredMixin, CreateView):
+    model = Hotel
+    fields = ['name', 'city_code', 'city']
+
+    def test_func(self):
+        hotel = self.get_object()
+        if self.request.user.is_staff:
+            return True
+        return False
+
+
+class HotelUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Hotel
+    fields = ['name', 'city_code', 'city']
+
+    def test_func(self):
+        hotel = self.get_object()
+        if self.request.user.is_staff:
+            return True
+        return False
+
+
+class HotelDeleteView(UserPassesTestMixin, DeleteView):
+    model = Hotel
+    success_url = '/dashboard'
+
+    def test_func(self):
+        hotel = self.get_object()
+        if self.request.user.is_staff:
+            return True
+        return False
