@@ -10,7 +10,14 @@ course CSV data is flat, while in the case of data models in Django one wants to
 So during the import of the data those relations have to be restored. Then in the end a small frontend application has to be built that allows users to lookup hotel data.
 
 <div style="text-align:center">
-    <img src="readme-images/hotels.png" width="100%">
+    <img src="readme-images/home.png" width="25%">
+    <img src="readme-images/login.png" width="25%">
+    <img src="readme-images/register.png" width="25%">
+    <img src="readme-images/logout.png" width="25%">
+    <img src="readme-images/dashboard.png" width="25%">
+    <img src="readme-images/hotel-create.png" width="25%">
+    <img src="readme-images/hotel-update.png" width="25%">
+    <img src="readme-images/hotel-delete.png" width="25%">
 </div>
 
 ## Requirements
@@ -50,3 +57,8 @@ To run the server use the command:
 ```
 python manage.py runserver
 ```
+
+**NOTE:** 
+Users have their default location set to Amsterdam, you can change this in the admin panel. <br>
+If the auth user is a manager/staff they will be able to manipulate hotel data that are located in their base location.
+You can change a users permissions in the admin panel as superuser.
