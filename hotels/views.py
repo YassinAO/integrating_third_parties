@@ -12,10 +12,13 @@ from .filters import HotelFilter
 # Paginating requires you to use page_obj in the view, see https://docs.djangoproject.com/en/3.1/topics/pagination/#paginating-a-listview
 
 
+def index(request):
+    return render(request, 'hotels/index.html')
+
+
 class HotelListView(ListView):
-    paginate_by = 5
+    paginate_by = 8
     model = Hotel
-    template_name = 'hotels/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
