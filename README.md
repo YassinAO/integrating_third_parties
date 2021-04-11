@@ -59,6 +59,6 @@ python manage.py runserver
 ```
 
 **NOTE:** 
-Users have their default location set to Amsterdam, you can change this in the admin panel. <br>
-If the auth user is a manager/staff they will be able to manipulate hotel data that are located in their base location.
+Users have their default city set to Amsterdam, you can change this in the admin panel. <br>
+If the auth user is a manager/staff they will be able to manipulate hotel data that are located in their base city.
 You can change a users permissions in the admin panel as superuser.

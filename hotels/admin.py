@@ -12,7 +12,7 @@ class HotelModelAdmin(admin.ModelAdmin):
                     'updated', 'created',)
     fieldsets = (
         ('Hotel Information', {'fields': ('name',)}),
-        ('Location Information', {'fields': ('city', 'city_code')}),
+        ('City Information', {'fields': ('city', 'city_code')}),
     )
 
 
