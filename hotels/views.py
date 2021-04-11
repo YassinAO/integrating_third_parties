@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Hotel, City
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .filters import HotelFilter
 
@@ -22,6 +22,7 @@ def index(request):
 class HotelListView(LoginRequiredMixin, ListView):
     paginate_by = 8
     model = Hotel
+    ordering = ['city_code']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,15 +39,10 @@ class HotelDetailView(LoginRequiredMixin, DetailView):
     model = Hotel
 
 
-class HotelCreateView(LoginRequiredMixin, CreateView):
+class HotelCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Hotel
     fields = ['name', 'city_code', 'city']
-
-    def test_func(self):
-        hotel = self.get_object()
-        if self.request.user.is_staff:
-            return True
-        return False
+    permission_required = 'users.is_staff'
 
 
 class HotelUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -55,7 +51,7 @@ class HotelUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         hotel = self.get_object()
-        if self.request.user.is_staff and self.request.user.location == hotel.city:
+        if self.request.user.is_staff and self.request.user.city == hotel.city:
             return True
         return False
 
@@ -66,6 +62,6 @@ class HotelDeleteView(UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         hotel = self.get_object()
-        if self.request.user.is_staff and self.request.user.location == hotel.city:
+        if self.request.user.is_staff and self.request.user.city == hotel.city:
             return True
         return False
